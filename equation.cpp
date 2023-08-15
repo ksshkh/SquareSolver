@@ -13,13 +13,13 @@ int main() {
   if (a == 0) {
     if (b != 0) {
       x = (-c) / b;
-      printf("x = %.2lf", x);
+      printf("x = %.2lf\n", x);
     }
     else {
       if (c == 0)
-        printf("x - любое число.");
+        printf("x - любое число.\n");
       else
-        printf("Решений нет.");
+        printf("Решений нет.\n");
     }
   }
   else {
