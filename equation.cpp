@@ -4,6 +4,9 @@
 #define EPS 1e-9
 
 bool compare(double x, double y);
+double discriminant(double a, double b, double c);
+double root1(double b, double D, double a);
+double root2(double b, double D, double a);
 
 int main() {
 
@@ -13,32 +16,31 @@ int main() {
   double D = 0;
   double x1 = 0;
   double x2 = 0;
-  double x = 0;
 
   printf("Введите коэффициенты a, b, c, чтобы решить квадратное уравнение вида\nax^2 + bx + c = 0\n");
   printf("a = ");
-  while (scanf("%lf", &a) != 1) {
-    fflush(stdin);
-    printf("Введите число, а не что-то другое\na = ");
+  if (!scanf("%lf", &a)) {
+    printf("Принимаются только числа. Запустите программу еще раз.");
+    return 0;
   }
   printf("b = ");
-  while (scanf("%lf", &b) != 1) {
-    fflush(stdin);
-    printf("Введите число, а не что-то другое\nb = ");
+  if (!scanf("%lf", &b)) {
+    printf("Принимаются только числа. Запустите программу еще раз.");
+    return 0;
   }
   printf("c = ");
-  while (scanf("%lf", &c) != 1) {
-    fflush(stdin);
-    printf("Введите число, а не что-то другое\nc = ");
+  if (!scanf("%lf", &c)) {
+    printf("Принимаются только числа. Запустите программу еще раз.");
+    return 0;
   }
 
-  if (compare(a, 0) == 1) {
-    if (compare(b, 0) == 0) {
-      x = (-c) / b;
-      printf("x = %.2lf", x);
+  if (compare(a, 0)) {
+    if (!compare(b, 0)) {
+      x1 = (-c) / b;
+      printf("x = %.2lf", x1);
     }
     else {
-      if (compare(c, 0) == 1) {
+      if (compare(c, 0)) {
         printf("x - любое число.");
       }
       else {
@@ -47,15 +49,15 @@ int main() {
     }
   }
   else {
-    D = b * b - 4 * a * c;
+    D = discriminant(a, b, c);
     if (D > 0) {
-      x1 = (-b + sqrt(D)) / (2 * a);
-      x2 = (-b - sqrt(D)) / (2 * a);
+      x1 = root1(b, D, a);
+      x2 = root2(b, D, a);
       printf("x1 = %.2lf\nx2 = %.2lf\n", x1, x2);
     }
-    else if (compare(D, 0) == 1) {
-      x = (-b + sqrt(D)) / (2 * a);
-      printf("x = %.2lf\n", x);
+    else if (compare(D, 0)) {
+      x1 = root1(b, D, a);
+      printf("x = %.2lf\n", x1);
     }
     else {
       printf("Решений не существует.\n");
@@ -64,6 +66,17 @@ int main() {
   return 0;
 }
 
+double discriminant(double a, double b, double c) {
+  return b * b - 4 * a * c;
+}
+
 bool compare(double x, double y) {
   return fabs(x - y) < EPS;
+}
+
+double root1(double b, double D, double a) {
+  return (-b + sqrt(D)) / (2 * a);
+}
+double root2(double b, double D, double a) {
+  return (-b - sqrt(D)) / (2 * a);
 }
