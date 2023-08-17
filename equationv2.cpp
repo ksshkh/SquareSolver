@@ -23,6 +23,7 @@ int main() {
   double x2 = 0;
 
   printf("Введите коэффициенты a, b, c, чтобы решить квадратное уравнение вида\nax^2 + bx + c = 0\n");
+  printf("(Программа принимает только числа)\n");
   a = input('a');
   b = input('b');
   c = input('c');
@@ -52,10 +53,9 @@ bool compare(double x, double y) {
 double input(char letter) {
   double koef;
   printf("%c = ", letter);
-  while (scanf("%lf", &koef) != 1 && koef != EOF) {
-    scanf("%*s");
-    printf("Введите число\n");
-    printf("%c = ", letter);
+  if (scanf("%lf", &koef) != 1 || koef == EOF) {
+    printf("Вы ввели не число. Запустите программу еще раз.");
+    exit(EXIT_FAILURE);
   }
   return koef;
 }
@@ -92,3 +92,4 @@ int root_finder(double a, double b, double c, double * x1, double * x2) {
       }
   }
 }
+
